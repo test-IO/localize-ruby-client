@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/localize/ruby/client/version"
+require_relative "lib/client/version"
 
 Gem::Specification.new do |spec|
   spec.name = "localize-ruby-client"
-  spec.version = Localize::Ruby::Client::VERSION
+  spec.version = Client::VERSION
   spec.authors = ["Cirro.io team"]
   spec.email = [""]
 
@@ -28,7 +28,6 @@ Gem::Specification.new do |spec|
         f.start_with?(*%w[bin/ test/ spec/ features/ .git .github appveyor Gemfile])
     end
   end
-  spec.files = ["lib/localize/ruby/client.rb", "lib/localize/ruby/client/translator.rb", "lib/localize/ruby/client/version.rb"]
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]

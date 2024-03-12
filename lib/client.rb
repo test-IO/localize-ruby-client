@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require_relative "client/version"
+
 require 'openssl'
 require 'jwt'
 require 'httparty'
 require 'zip'
 
-class Translator
+class Client
   APP_ID            = ENV['APP_ID']
   PRIVATE_KEY       = ENV['PRIVATE_KEY']
   PROJECT_UID       = ENV['PROJECT_UID']

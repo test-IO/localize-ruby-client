@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Localize::Ruby::Client do
+RSpec.describe Client do
   it "has a version number" do
-    expect(Localize::Ruby::Client::VERSION).not_to be nil
+    expect(Client::VERSION).not_to be nil
   end
 
   it "does something useful" do

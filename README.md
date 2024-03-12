@@ -1,24 +1,52 @@
 # Localize::Ruby::Client
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/localize/ruby/client`. To experiment with that code, run `bin/console` for an interactive prompt.
+Helps you to connect your application to [localize-docs.cirro.io](https://localize-docs.cirro.io/) easily.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
-
+    ```
+    bundle add localize-ruby-client
+    ```
 If bundler is not being used to manage dependencies, install the gem by executing:
+    ```
+    gem install localize-ruby-client
+    ```
+Add your credentials to .env
+    ```
+    APP_ID=your_application_id_here
+    PRIVATE_KEY=your_private_key_here
+    PROJECT_UID=your_project_id_here
+    ROOT_PATH_TO_SAVE=path_you_want_to_save_translated./config/locales/
+    ```
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+    *Details about secrets [here](https://localize-docs.cirro.io/docs/authentication)
+
+
+
+
+## Requirements
+* Ruby 3.0.0 or higher
 
 ## Usage
+For [Export all files endpoint](https://localize-docs.cirro.io/docs/continuous_projects/export_all) use next line:
 
-TODO: Write usage instructions here
+    ```
+    Client.new.update_translations
+    ```
+
+For [Import a file](https://localize-docs.cirro.io/docs/continuous_projects/import) next line with adding parameters:
+
+    ```
+    Client.new.upload_file(file: "your_file.yml", source_language_code: "en", conflict_mode: "replace")
+    ```
+    *As example we added random parameters, you should add yours.
+
+For [Translate missing strings](https://localize-docs.cirro.io/docs/continuous_projects/translate_missing_strings):
+
+    ```
+    Client.new.translate
+    ```
 
 ## Development
 
@@ -28,4 +56,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/localize-ruby-client.
+* Fork the project.
+* Run `bundle`
+* Make your feature addition or bug fix.
+* Add tests for it.
+* Commit, do not mess with version, or history.
+* Send a pull request.
