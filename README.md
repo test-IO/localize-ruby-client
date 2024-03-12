@@ -5,6 +5,7 @@ Helps you to connect your application to [localize-docs.cirro.io](https://locali
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
+ 
     ```
     bundle add localize-ruby-client
     ```
@@ -13,7 +14,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
     gem install localize-ruby-client
     ```
 Add your credentials to .env
-    ```
+    ```ruby
     APP_ID=your_application_id_here
     PRIVATE_KEY=your_private_key_here
     PROJECT_UID=your_project_id_here
