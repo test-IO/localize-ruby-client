@@ -5,7 +5,7 @@ Helps you to connect your application to [localize-docs.cirro.io](https://locali
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
- 
+
 ```
 bundle add localize-ruby-client
 ```
@@ -25,12 +25,23 @@ ROOT_PATH_TO_SAVE=path_you_want_to_save_translated
 Details about secrets [here](https://localize-docs.cirro.io/docs/authentication)
 
 
-
-
 ## Requirements
 * Ruby 3.0.0 or higher
 
+## Usage in terminal
+For upload new file to Localize API, translate him, dounload and update locally use this command in your terminal:
+
+```
+rake client:upload_and_translate_file path_to_file source_language_code conflict_mode
+```
+
+For example:
+```
+rake client:upload_and_translate_file "./your/path_to/file.en.yml" "en" "replace"
+```
+
 ## Usage
+
 For [Export all files endpoint](https://localize-docs.cirro.io/docs/continuous_projects/export_all) use next line:
 
 ```

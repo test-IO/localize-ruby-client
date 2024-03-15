@@ -3,21 +3,20 @@
 require_relative "lib/client/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "localize-ruby-client"
-  spec.version = Client::VERSION
-  spec.authors = ["Cirro.io team"]
-  spec.email = [""]
-
-  spec.summary = "Helps you to connect your application to localize-docs.cirro.io easily"
-
+  spec.name        = "localize-ruby-client"
+  spec.version     = Client::VERSION
+  spec.licenses    = ['MIT']
+  spec.authors     = ["Cirro.io team"]
+  spec.email       = [""]
+  spec.summary     = "Helps you to connect your application to localize-docs.cirro.io easily"
   spec.description = "Helps you to connect your application to localize-docs.cirro.io easily"
-  spec.homepage = "https://github.com/test-IO/localize-ruby-client"
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.homepage    = "https://github.com/test-IO/localize-ruby-client"
 
-  # spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
+  spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/test-IO/localize-ruby-client"
+  # spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
   # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
 
   # Specify which files should be added to the gem when it is released.
@@ -38,9 +37,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency "openssl", "~> 3.1"
   spec.add_dependency "httparty", "~> 0.21.0"
   spec.add_dependency "rubyzip", "~> 2.3"
+  spec.add_dependency "activesupport", "~> 7.0.8"
 
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop", "~> 1.21"
+  spec.add_development_dependency "dotenv-rails", "~> 3.1"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
