@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
 require "active_support/time"
 
 
@@ -17,9 +16,80 @@ RSpec.describe Client do
     end
   end
 
-  # it "has a version number" do
-  #   expect(Client::VERSION).not_to be nil
-  # end
+  it "has a version number" do
+    expect(Client::VERSION).not_to be nil
+  end
+
+  describe ".update_translations" do
+    context "successfull response" do
+      it "return 200 if secrets are correct" do
+        response = instance_double(HTTParty::Response, body: binary_zip)
+        allow(subject.class).to receive(:get).and_return(response)
+        allow(response).to receive(:success?).and_return(true)
+
+        subject.update_translations
+
+        expect(File.exist?("./spec/tmp/en/simple_form.en.yml")).to be true
+        expect(File.exist?("./spec/tmp/fr/simple_form.fr.yml")).to be true
+        expect(subject.extracted_files_data[:created_files])
+          .to match_array(["./spec/tmp/en/simple_form.en.yml", "./spec/tmp/fr/simple_form.fr.yml"])
+      end
+    end
+
+    context "return errors" do
+      it "return 401 if secrets aren't correct" do
+        result = subject.update_translations
+
+        expect(result.code).to eq(401)
+      end
+
+      it "raise NameError if APP_ID is uninitialized in .env file" do
+        allow(subject).to receive(:app_id).and_return(nil)
+
+        expect { subject.update_translations }.to raise_error(
+          NameError, "Error: uninitialized constant APP_ID in .env"
+        )
+      end
+
+      it "raise NameError if PRIVATE_KEY is uninitialized in .env file" do
+        allow(subject).to receive(:private_key).and_return(nil)
+
+        expect { subject.update_translations }.to raise_error(
+          NameError, "Error: uninitialized constant PRIVATE_KEY in .env"
+        )
+      end
+
+      it "raise NameError if PROJECT_UID is uninitialized in .env file" do
+        allow(subject).to receive(:project_uid).and_return(nil)
+
+        expect { subject.update_translations }.to raise_error(
+          NameError, "Error: uninitialized constant PROJECT_UID in .env"
+        )
+      end
+
+      it "raise NameError if ROOT_PATH_TO_SAVE is uninitialized in .env file" do
+        allow(subject).to receive(:root_path_to_save).and_return(nil)
+
+        expect { subject.update_translations }.to raise_error(
+          NameError, "Error: uninitialized constant ROOT_PATH_TO_SAVE in .env"
+        )
+      end
+
+      it "raise NameError if all constants are uninitialized in .env file" do
+        allow(subject).to receive(:app_id ).and_return(nil)
+        allow(subject).to receive(:project_uid, ).and_return(nil)
+        allow(subject).to receive(:private_key).and_return(nil)
+        allow(subject).to receive(:root_path_to_save).and_return(nil)
+        error_message = "Error: uninitialized constant APP_ID in .env, "\
+                        "Error: uninitialized constant PRIVATE_KEY in .env, "\
+                        "Error: uninitialized constant PROJECT_UID in .env, "\
+                        "Error: uninitialized constant ROOT_PATH_TO_SAVE in .env"
+
+        expect { subject.update_translations }
+          .to raise_error(NameError, error_message)
+      end
+    end
+  end
 
   describe ".translate" do
     it "return 200" do
@@ -156,7 +226,7 @@ RSpec.describe Client do
         )
       end
 
-      it "raise FileNotFoundError if file not found" do
+      it "raise ArgumentError if file not found" do
         expect {
           subject.upload_file(
             path_to_file: './spec/support/no_file.en.yml',
@@ -178,77 +248,6 @@ RSpec.describe Client do
           conflict_mode: "replace"
         )
         expect(response.code).to eq(500)
-      end
-    end
-  end
-
-  describe ".update_translations" do
-    context "successfull response" do
-      it "return 200 if secrets are correct" do
-        response = instance_double(HTTParty::Response, body: binary_zip)
-        allow(subject.class).to receive(:get).and_return(response)
-        allow(response).to receive(:success?).and_return(true)
-
-        subject.update_translations
-
-        expect(File.exist?("./spec/tmp/en/simple_form.en.yml")).to be true
-        expect(File.exist?("./spec/tmp/fr/simple_form.fr.yml")).to be true
-        expect(subject.extracted_files_data[:created_files])
-          .to match_array(["./spec/tmp/en/simple_form.en.yml", "./spec/tmp/fr/simple_form.fr.yml"])
-      end
-    end
-
-    context "return errors" do
-      it "return 401 if secrets aren't correct" do
-        result = subject.update_translations
-
-        expect(result.code).to eq(401)
-      end
-
-      it "raise StandardError if APP_ID is uninitialized in .env file" do
-        allow(subject).to receive(:app_id).and_return(nil)
-
-        expect { subject.update_translations }.to raise_error(
-          NameError, "Error: uninitialized constant APP_ID in .env"
-        )
-      end
-
-      it "raise StandardError if PRIVATE_KEY is uninitialized in .env file" do
-        allow(subject).to receive(:private_key).and_return(nil)
-
-        expect { subject.update_translations }.to raise_error(
-          NameError, "Error: uninitialized constant PRIVATE_KEY in .env"
-        )
-      end
-
-      it "raise StandardError if PROJECT_UID is uninitialized in .env file" do
-        allow(subject).to receive(:project_uid).and_return(nil)
-
-        expect { subject.update_translations }.to raise_error(
-          NameError, "Error: uninitialized constant PROJECT_UID in .env"
-        )
-      end
-
-      it "raise StandardError if ROOT_PATH_TO_SAVE is uninitialized in .env file" do
-        allow(subject).to receive(:root_path_to_save).and_return(nil)
-
-        expect { subject.update_translations }.to raise_error(
-          NameError, "Error: uninitialized constant ROOT_PATH_TO_SAVE in .env"
-        )
-      end
-
-      it "raise StandardError if all constants are uninitialized in .env file" do
-        allow(subject).to receive(:app_id ).and_return(nil)
-        allow(subject).to receive(:project_uid, ).and_return(nil)
-        allow(subject).to receive(:private_key).and_return(nil)
-        allow(subject).to receive(:root_path_to_save).and_return(nil)
-        error_message = "Error: uninitialized constant APP_ID in .env, "\
-                        "Error: uninitialized constant PRIVATE_KEY in .env, "\
-                        "Error: uninitialized constant PROJECT_UID in .env, "\
-                        "Error: uninitialized constant ROOT_PATH_TO_SAVE in .env"
-
-        expect { subject.update_translations }
-          .to raise_error(NameError, error_message)
       end
     end
   end
