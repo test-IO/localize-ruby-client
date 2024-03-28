@@ -21,9 +21,10 @@ PROJECT_UID=your_project_id_here
 ROOT_PATH_TO_SAVE=path_you_want_to_save_translated
 # usually last one is ./config/locales/
 ```
-In your application add these lines to Rakefile
-# It needs to be loaded Gem's rake tasks
+Add these lines to the Rakefile in your application
+
 ```ruby
+# These lines are needed to load rake tasks of the Client gem.
 spec = Gem::Specification.find_by_name 'client'
 rakefile = "#{spec.gem_dir}/lib/tasks/client.rake"
 load rakefile
