@@ -21,6 +21,13 @@ PROJECT_UID=your_project_id_here
 ROOT_PATH_TO_SAVE=path_you_want_to_save_translated
 # usually last one is ./config/locales/
 ```
+In your application add these lines to Rakefile
+# It needs to be loaded Gem's rake tasks
+```ruby
+spec = Gem::Specification.find_by_name 'client'
+rakefile = "#{spec.gem_dir}/lib/tasks/client.rake"
+load rakefile
+```
 
 Details about secrets [here](https://localize-docs.cirro.io/docs/authentication)
 
