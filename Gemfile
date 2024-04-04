@@ -10,7 +10,7 @@ gem "openssl", "~> 3.1"
 gem "jwt", "~> 2.8"
 gem "httparty", "~> 0.21.0"
 gem "rubyzip", "~> 2.3", ">= 2.3.2"
-gem "activesupport", "~> 7.0.8"
+gem "activesupport", "~> 7.1.2"
 
 group :test, :development do
   gem "rspec", "~> 3.0"

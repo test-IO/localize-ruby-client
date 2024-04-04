@@ -3,7 +3,7 @@
 require_relative "lib/client/version"
 
 Gem::Specification.new do |spec|
-  spec.name        = "localize-ruby-client"
+  spec.name        = "client" # referring to recommendations for naming gems https://guides.rubygems.org/name-your-gem/
   spec.version     = Client::VERSION
   spec.licenses    = ['MIT']
   spec.authors     = ["Cirro.io team"]
@@ -37,7 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "openssl", "~> 3.1"
   spec.add_dependency "httparty", "~> 0.21.0"
   spec.add_dependency "rubyzip", "~> 2.3"
-  spec.add_dependency "activesupport", "~> 7.0.8"
+  spec.add_dependency "activesupport", "~> 7.1.2"
 
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop", "~> 1.21"
