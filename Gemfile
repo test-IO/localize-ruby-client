@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in localize-ruby-client.gemspec
+# Specify your gem's dependencies in localize_ruby_client.gemspec
 gemspec
 
 gem "rake", "~> 13.0"

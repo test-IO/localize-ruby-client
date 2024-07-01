@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    localize-ruby-client (0.1.0)
+    localize_ruby_client (0.1.0)
       activesupport (~> 7.1.2)
       httparty (~> 0.21.0)
       jwt (~> 2.8, >= 2.8.1)
@@ -162,7 +162,7 @@ DEPENDENCIES
   dotenv-rails (~> 3.1)
   httparty (~> 0.21.0)
   jwt (~> 2.8)
-  localize-ruby-client!
+  localize_ruby_client!
   openssl (~> 3.1)
   rake (~> 13.0)
   rspec (~> 3.0)

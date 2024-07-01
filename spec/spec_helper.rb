@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-require "client"
+require "localize_ruby_client"
+require "active_support/core_ext"
 require 'dotenv'
+
 Dotenv.load('./.env.test')
 
 RSpec.configure do |config|
