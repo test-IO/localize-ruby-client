@@ -11,4 +11,4 @@ RuboCop::RakeTask.new
 
 task default: %i[spec rubocop]
 
-Dir.glob(File.join('lib/tasks/**/*.rake')).each { |file| load file }
+Dir.glob(File.join("lib/tasks/**/*.rake")).each { |file| load file }
