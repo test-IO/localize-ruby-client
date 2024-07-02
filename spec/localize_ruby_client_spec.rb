@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 RSpec.describe LocalizeRubyClient do
-  let(:binary_zip) {
+  let(:binary_zip) do
     "PK\x03\x04\x14\x00\x00\x00\b\x00\xD7rmXM\xD0\xB5l\x85\x00\x00\x00\xBD\x00\x00\x00\x15\x00\x00\x00en/simple_form.en.yml=\x8DA\x0E\xC2 \x10E\xF7\x9Cb\xD2\r\x89I/\xC0!\x8C[W\x84\xDA\x8F\x12\x81\xA9\x03m\xF5\xF6R\xAB\xAE&\xEF\xE5\xFF?}\xDF+d\xA3\x88JHS\x84\xF5,iC\"\xFDB\xD1\x86\xF4\xB9\x9D]d\xDE\xF8\xC8;\n\x1Es\x10\x8C{\x9A\xA8\xE2Y\xCD\xDF~err7\xD4\x1D\xBA\x0FC\x84\xC5f\xAE\xC1\x87\x8B\xAB\x81\xF3\xAF<\xC2\xBB9V\x9BP\x8A\xBB\xA2\xBD9E\xB8\x82\xB6\xB7\x04\xACTo\xA0Ix\x88H\x85\x06D^\x8DVoPK\x03\x04\x14\x00\x00\x00\b\x00\xD7rmX\xC33<\x96\x8E\x00\x00\x00\xC4\x00\x00\x00\x15\x00\x00\x00fr/simple_form.fr.yml5\xCB\xC1\r\xC20\x10D\xD1{\xAA\x18\xE5b\t\xC9\r\xB8\b\xB8q\x8DL\xB2F+loX\xDBR\xA0\"\xFA\xA01B\x02\xC77\xFAc\xAD\xED\x82\xBA\x0E(\x9C\xE6HC\x10M_\x02\xE6A\xC58\x9C\x1A\xEF\xCC\xB2\xEA(y\x93\xD2\xBD\xB1\xD2\xB4\xA7@\xA5\xA5\xBA}-\xBF)y\xBD9\xF4\x87~3\xA9\x8A\x0EY*\a\x1E}e\xC9\xFF\xEBD\xC1\xB7X\x87D\xA5\xF8+9\x9835\x8E\x91\x9E\xA0\xC5'\xCE\xA4\x88T0\xAB\\\xE2\xFB\xB5f\x18\xD9Nk-\xAD\xC0\x99\xEE\x03PK\x01\x024\x03\x14\x00\x00\x00\b\x00\xD7rmXM\xD0\xB5l\x85\x00\x00\x00\xBD\x00\x00\x00\x15\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\xA4\x81\x00\x00\x00\x00en/simple_form.en.ymlPK\x01\x024\x03\x14\x00\x00\x00\b\x00\xD7rmX\xC33<\x96\x8E\x00\x00\x00\xC4\x00\x00\x00\x15\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\xA4\x81\xB8\x00\x00\x00fr/simple_form.fr.ymlPK\x05\x06\x00\x00\x00\x00\x02\x00\x02\x00\x86\x00\x00\x00y\x01\x00\x00\x00\x00"
-   }
-  let(:path_to_file) { './spec/support/test_file.en.yml' }
+  end
+  let(:path_to_file) { "./spec/support/test_file.en.yml" }
 
   after do
-    directory = ENV['ROOT_PATH_TO_SAVE']
-    if directory.present? && File.directory?(directory)
-      FileUtils.rm_rf(directory)
-    end
+    directory = ENV["ROOT_PATH_TO_SAVE"]
+    FileUtils.rm_rf(directory) if directory.present? && File.directory?(directory)
   end
 
   it "has a version number" do
@@ -73,8 +71,8 @@ RSpec.describe LocalizeRubyClient do
       end
 
       it "raise NameError if all constants are uninitialized in .env file" do
-        allow(subject).to receive(:app_id ).and_return(nil)
-        allow(subject).to receive(:project_uid, ).and_return(nil)
+        allow(subject).to receive(:app_id).and_return(nil)
+        allow(subject).to receive(:project_uid).and_return(nil)
         allow(subject).to receive(:private_key).and_return(nil)
         allow(subject).to receive(:root_path_to_save).and_return(nil)
         error_message = "Error: uninitialized constant APP_ID in .env, "\
@@ -102,9 +100,9 @@ RSpec.describe LocalizeRubyClient do
       it "raise NameError if APP_ID is uninitialized in .env file" do
         allow(subject).to receive(:app_id).and_return(nil)
 
-        expect {
+        expect do
           subject.translate
-        }.to raise_error(
+        end.to raise_error(
           NameError, "Error: uninitialized constant APP_ID in .env"
         )
       end
@@ -112,9 +110,9 @@ RSpec.describe LocalizeRubyClient do
       it "raise NameError if PRIVATE_KEY is uninitialized in .env file" do
         allow(subject).to receive(:private_key).and_return(nil)
 
-        expect {
+        expect do
           subject.translate
-        }.to raise_error(
+        end.to raise_error(
           NameError, "Error: uninitialized constant PRIVATE_KEY in .env"
         )
       end
@@ -122,9 +120,9 @@ RSpec.describe LocalizeRubyClient do
       it "raise NameError if PROJECT_UID is uninitialized in .env file" do
         allow(subject).to receive(:project_uid).and_return(nil)
 
-        expect {
+        expect do
           subject.translate
-        }.to raise_error(
+        end.to raise_error(
           NameError, "Error: uninitialized constant PROJECT_UID in .env"
         )
       end
@@ -132,9 +130,9 @@ RSpec.describe LocalizeRubyClient do
       it "raise NameError if ROOT_PATH_TO_SAVE is uninitialized in .env file" do
         allow(subject).to receive(:root_path_to_save).and_return(nil)
 
-        expect {
+        expect do
           subject.translate
-        }.to raise_error(
+        end.to raise_error(
           NameError, "Error: uninitialized constant ROOT_PATH_TO_SAVE in .env"
         )
       end
@@ -170,13 +168,13 @@ RSpec.describe LocalizeRubyClient do
       it "raise NameError if APP_ID is uninitialized in .env file" do
         allow(subject).to receive(:app_id).and_return(nil)
 
-        expect {
+        expect do
           subject.upload_file(
             path_to_file: path_to_file,
             source_language_code: "en",
             conflict_mode: "replace"
           )
-        }.to raise_error(
+        end.to raise_error(
           NameError, "Error: uninitialized constant APP_ID in .env"
         )
       end
@@ -184,13 +182,13 @@ RSpec.describe LocalizeRubyClient do
       it "raise NameError if PRIVATE_KEY is uninitialized in .env file" do
         allow(subject).to receive(:private_key).and_return(nil)
 
-        expect {
+        expect do
           subject.upload_file(
             path_to_file: path_to_file,
             source_language_code: "en",
             conflict_mode: "replace"
           )
-        }.to raise_error(
+        end.to raise_error(
           NameError, "Error: uninitialized constant PRIVATE_KEY in .env"
         )
       end
@@ -198,13 +196,13 @@ RSpec.describe LocalizeRubyClient do
       it "raise NameError if PROJECT_UID is uninitialized in .env file" do
         allow(subject).to receive(:project_uid).and_return(nil)
 
-        expect {
+        expect do
           subject.upload_file(
             path_to_file: path_to_file,
             source_language_code: "en",
             conflict_mode: "replace"
           )
-        }.to raise_error(
+        end.to raise_error(
           NameError, "Error: uninitialized constant PROJECT_UID in .env"
         )
       end
@@ -212,25 +210,25 @@ RSpec.describe LocalizeRubyClient do
       it "raise NameError if ROOT_PATH_TO_SAVE is uninitialized in .env file" do
         allow(subject).to receive(:root_path_to_save).and_return(nil)
 
-        expect {
+        expect do
           subject.upload_file(
             path_to_file: path_to_file,
             source_language_code: "en",
             conflict_mode: "replace"
           )
-        }.to raise_error(
+        end.to raise_error(
           NameError, "Error: uninitialized constant ROOT_PATH_TO_SAVE in .env"
         )
       end
 
       it "raise ArgumentError if file not found" do
-        expect {
+        expect do
           subject.upload_file(
-            path_to_file: './spec/support/no_file.en.yml',
+            path_to_file: "./spec/support/no_file.en.yml",
             source_language_code: "en",
             conflict_mode: "replace"
           )
-        }.to raise_error(
+        end.to raise_error(
           ArgumentError, "Error: file not found"
         )
       end

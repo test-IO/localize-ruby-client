@@ -2,9 +2,10 @@
 
 require "localize_ruby_client"
 require "active_support/core_ext"
-require 'dotenv'
+require "dotenv"
+require "pry"
 
-Dotenv.load('./.env.test')
+Dotenv.load("./.env.test")
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

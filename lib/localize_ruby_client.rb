@@ -1,10 +1,16 @@
-require 'httparty'
+# frozen_string_literal: true
 
-require_relative 'client/configuration_helper'
-require_relative 'client/version'
-require_relative 'client/jwt_helper'
-require_relative 'client/archive_helper'
-require_relative 'client/railtie' if defined?(Rails)
+require "httparty"
+
+require_relative "client/configuration_helper"
+require_relative "client/version"
+require_relative "client/jwt_helper"
+require_relative "client/archive_helper"
+
+if defined?(Rails)
+  require "rails/railtie"
+  require_relative "client/railtie"
+end
 
 class LocalizeRubyClient
   include HTTParty
@@ -17,7 +23,7 @@ class LocalizeRubyClient
   def initialize
     @extracted_files_data = { created_files: [] }
 
-    self.class.headers 'Authorization' => "jwt #{jwt_token}"
+    self.class.headers "Authorization" => "jwt #{jwt_token}"
     self.class.base_uri "#{LocalizeRubyClient.config.site}/#{LocalizeRubyClient.config.api_version}"
   end
 
@@ -32,11 +38,9 @@ class LocalizeRubyClient
   end
 
   def upload_file(project_uid:, path_to_file:, source_language_code:, conflict_mode:)
-    unless File.exist?(path_to_file)
-      raise ArgumentError, 'Error: file not found'
-    end
+    raise ArgumentError, "Error: file not found" unless File.exist?(path_to_file)
 
-    binary_data = File.open(path_to_file, 'rb') { |io| io.read }
+    binary_data = File.open(path_to_file, "rb", &:read)
     payload = {
       uid: project_uid,
       import: {

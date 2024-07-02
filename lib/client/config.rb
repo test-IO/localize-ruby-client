@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
 module Client
+  # The Config class holds configuration settings for the LocalizeRubyClient.
+  # It provides attributes for app_id, private_key, root_path_to_save, site, and api_version.
+  # It also includes a method to validate these configurations to ensure they are properly set.
   class Config
     attr_accessor :app_id, :private_key, :root_path_to_save, :site, :api_version
 
@@ -6,8 +11,8 @@ module Client
       @app_id = nil
       @private_key = nil
       @root_path_to_save = nil
-      @site = 'https://localize.cirro.io/api'
-      @api_version = 'v2'
+      @site = "https://localize.cirro.io/api"
+      @api_version = "v2"
     end
 
     def validate!
@@ -21,7 +26,7 @@ module Client
         "Error: uninitialized constant #{variable_name.upcase} in .env" if value.nil? || value.strip.empty?
       end.compact
 
-      raise NameError, messages.join(', ') if messages.present?
+      raise NameError, messages.join(", ") if messages.present?
     end
   end
 end
