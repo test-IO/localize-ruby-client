@@ -2,7 +2,6 @@
 
 require "localize_ruby_client"
 require "active_support/core_ext"
-require "dotenv"
 require "pry"
 
 RSpec.configure do |config|

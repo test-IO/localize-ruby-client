@@ -2,7 +2,6 @@
 
 require "localize_ruby_client"
 require "active_support/time"
-require "dotenv"
 
 namespace :localize_ruby_client do # rubocop:disable Metrics/BlockLength
   desc "Upload file to Localize API"

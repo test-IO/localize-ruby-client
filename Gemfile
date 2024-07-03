@@ -13,7 +13,6 @@ gem "rake", "~> 13.0"
 gem "rubyzip", "~> 2.3", ">= 2.3.2"
 
 group :test, :development do
-  gem "dotenv-rails", "~> 3.1"
   gem "pry"
   gem "rspec", "~> 3.0"
   gem "rubocop", "~> 1.21"

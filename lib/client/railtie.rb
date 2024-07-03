@@ -5,7 +5,7 @@ module Client
   # It automatically loads rake tasks provided by the gem.
   class Railtie < Rails::Railtie
     rake_tasks do
-      load "lib/tasks/localize_ruby_client.rake"
+      load File.expand_path("../tasks/localize_ruby_client.rake", __dir__)
     end
   end
 end
