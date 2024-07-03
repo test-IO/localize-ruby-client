@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 require "httparty"
+require "jwt"
+require "active_support"
+require "active_support/time"
+require "zip"
+require "tempfile"
 
 require_relative "client/configuration_helper"
 require_relative "client/version"
-require_relative "client/jwt_helper"
-require_relative "client/archive_helper"
 
 if defined?(Rails)
   require "rails/railtie"
@@ -18,8 +21,6 @@ end
 # providing methods to update translations, request translations, and upload files.
 class LocalizeRubyClient
   include HTTParty
-  include Client::JwtHelper
-  include Client::ArchiveHelper
   include Client::ConfigurationHelper
 
   attr_accessor :extracted_files_data
@@ -38,7 +39,7 @@ class LocalizeRubyClient
   # @return [HTTParty::Response] the response from the Localize API
   def update_translations(project_uid:)
     response = self.class.get("/continuous_projects/#{project_uid}/target_files")
-    replace_translation_files(response.body, extracted_files_data) if response.success?
+    replace_translation_files(response.body) if response.success?
     response
   end
 
@@ -72,5 +73,38 @@ class LocalizeRubyClient
     }
 
     self.class.post("/continuous_projects/#{project_uid}/imports", body: payload.to_param)
+  end
+
+  private
+
+  def jwt_token
+    payload = {
+      exp: 10.minutes.from_now.to_i,
+      iss: LocalizeRubyClient.config.app_id
+    }
+
+    JWT.encode(payload, LocalizeRubyClient.config.private_key, "HS256")
+  end
+
+  def replace_translation_files(data)
+    temp_file = Tempfile.new
+    temp_file.binmode
+    temp_file.write(data)
+    temp_file.rewind
+    extract_entries(temp_file)
+    temp_file.close
+    temp_file.unlink
+  end
+
+  def extract_entries(temp_file)
+    Zip::File.open(temp_file).each do |entry_file|
+      full_path_to_save = File.join(LocalizeRubyClient.config.root_path_to_save, entry_file.name)
+      directory_path = File.dirname(full_path_to_save)
+      FileUtils.mkdir_p(directory_path) unless File.directory?(directory_path)
+
+      # option { true } allows to replace file if it already exists
+      entry_file.extract(full_path_to_save) { true }
+      extracted_files_data[:created_files].push(full_path_to_save)
+    end
   end
 end

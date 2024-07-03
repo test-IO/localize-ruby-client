@@ -33,8 +33,8 @@ RSpec.describe Client::ConfigurationHelper do # rubocop:disable Metrics/BlockLen
             config.root_path_to_save = nil
           end
         end.to raise_error(NameError,
-                           "Error: uninitialized constant APP_ID in .env, Error: uninitialized constant PRIVATE_KEY in"\
-                           " .env, Error: uninitialized constant ROOT_PATH_TO_SAVE in .env")
+                           "Error: uninitialized configuration app_id, Error: uninitialized configuration private_key,"\
+                           " Error: uninitialized configuration root_path_to_save")
       end
 
       it "raises a NameError when app_id is missing" do
@@ -44,7 +44,7 @@ RSpec.describe Client::ConfigurationHelper do # rubocop:disable Metrics/BlockLen
             config.private_key = "test_private_key"
             config.root_path_to_save = "/path/to/save"
           end
-        end.to raise_error(NameError, "Error: uninitialized constant APP_ID in .env")
+        end.to raise_error(NameError, "Error: uninitialized configuration app_id")
       end
 
       it "raises a NameError when private_key is missing" do
@@ -54,7 +54,7 @@ RSpec.describe Client::ConfigurationHelper do # rubocop:disable Metrics/BlockLen
             config.private_key = nil
             config.root_path_to_save = "/path/to/save"
           end
-        end.to raise_error(NameError, "Error: uninitialized constant PRIVATE_KEY in .env")
+        end.to raise_error(NameError, "Error: uninitialized configuration private_key")
       end
 
       it "raises a NameError when root_path_to_save is missing" do
@@ -64,7 +64,7 @@ RSpec.describe Client::ConfigurationHelper do # rubocop:disable Metrics/BlockLen
             config.private_key = "test_private_key"
             config.root_path_to_save = nil
           end
-        end.to raise_error(NameError, "Error: uninitialized constant ROOT_PATH_TO_SAVE in .env")
+        end.to raise_error(NameError, "Error: uninitialized configuration root_path_to_save")
       end
     end
   end

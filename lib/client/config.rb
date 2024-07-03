@@ -23,7 +23,7 @@ module Client
       }
 
       messages = credentials.map do |variable_name, value|
-        "Error: uninitialized constant #{variable_name.upcase} in .env" if value.nil? || value.strip.empty?
+        "Error: uninitialized configuration #{variable_name}" if value.nil? || value.strip.empty?
       end.compact
 
       raise NameError, messages.join(", ") if messages.present?
