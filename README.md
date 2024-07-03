@@ -67,6 +67,9 @@ Updates translations for the specified project.
 rake localize_ruby_client:upload_and_translate_file[project_uid, path_to_file, source_language_code, conflict_mode]
 ```
 
+### Note  
+Some shells (like zsh) require you to escape the brackets: `rake my_task\['arg1'\]`
+
 A composite task that uploads a file, initiates a translation request, and updates translations.
 
 ## Usage
