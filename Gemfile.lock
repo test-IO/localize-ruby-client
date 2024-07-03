@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    localize_ruby_client (0.1.0)
+    localize_ruby_client (0.2.0)
       activesupport (~> 7.1.2)
       httparty (~> 0.21.0)
       jwt (~> 2.8, >= 2.8.1)
