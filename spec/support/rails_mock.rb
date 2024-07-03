@@ -11,7 +11,7 @@ module Rails
     end
 
     def self.load_tasks
-      @rake_tasks_blocks&.each(&:call)
+      @rake_tasks_blocks.each(&:call)
     end
   end
 end

@@ -4,12 +4,12 @@ Helps you to connect your application to [localize-docs.cirro.io](https://locali
 
 ## Installation
 
-Install the gem and add to the application's Gemfile by executing:
+Install the gem and add it to the application's Gemfile by executing:
 
 ```bash
 bundle add localize_ruby_client
 ```
-If bundler is not being used to manage dependencies, install the gem by executing:
+If Bundler is not being used to manage dependencies, install the gem by executing:
 ```bash
 gem install localize_ruby_client
 ```
@@ -27,7 +27,7 @@ This gem includes `Railties` integration to automatically load Rake tasks when u
 
 ### For projects that do not use Rails.
 
-Add these lines to the Rakefile in your application
+Add these lines to the `Rakefile` in your application:
 
 ```ruby
 # These lines are needed to load rake tasks of the LocalizeRubyClient gem.

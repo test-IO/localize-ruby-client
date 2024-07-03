@@ -12,7 +12,7 @@ module Client
       base.extend(ClassMethods)
     end
 
-    module ClassMethods
+    module ClassMethods # rubocop:disable Style/Documentation
       attr_accessor :config
 
       def configure
