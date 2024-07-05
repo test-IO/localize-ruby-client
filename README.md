@@ -18,7 +18,7 @@ Set your configurations:
 LocalizeRubyClient.configure do |config|
   config.app_id = 'your_app_id'
   config.private_key = 'your_private_key'
-  config.project_id = 'your project_uid'
+  config.project_uid = 'your project_uid'
 end
 ```
 Details about secrets [here](https://localize-docs.cirro.io/docs/authentication)
