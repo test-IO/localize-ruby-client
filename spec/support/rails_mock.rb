@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-# Mimic Railtie behavior on rake tasks load
+# Mimic Rails and Railtie behavior
 module Rails
-  class Railtie
-    @rake_tasks_blocks = []
+  def self.root
+    Pathname.new("spec/support/rails_app_mock")
+  end
 
+  class Railtie
     def self.rake_tasks(&block)
       @rake_tasks_blocks ||= []
       @rake_tasks_blocks << block

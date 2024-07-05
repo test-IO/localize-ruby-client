@@ -1,6 +1,6 @@
 # LocalizeRubyClient
 
-Helps you to connect your application to [localize-docs.cirro.io](https://localize-docs.cirro.io/) easily.
+Helps you to connect your Rails application to [localize-docs.cirro.io](https://localize-docs.cirro.io/) easily by managing your localization files with three simple Rake tasks.
 
 ## Installation
 
@@ -18,80 +18,44 @@ Set your configurations:
 LocalizeRubyClient.configure do |config|
   config.app_id = 'your_app_id'
   config.private_key = 'your_private_key'
-  config.root_path_to_save = '/path/to/save/files'
+  config.project_id = 'your project_uid'
 end
 ```
-
-## Support for Railties
-This gem includes `Railties` integration to automatically load Rake tasks when used within a Rails application. If your project uses Rails, you do not need to manually load the Rake tasks; they will be available as soon as the gem is included in your Gemfile and bundled.
-
-### For projects that do not use Rails.
-
-Add these lines to the `Rakefile` in your application:
-
-```ruby
-# These lines are needed to load rake tasks of the LocalizeRubyClient gem.
-spec = Gem::Specification.find_by_name 'localize_ruby_client'
-rakefile = "#{spec.gem_dir}/lib/tasks/localize_ruby_client.rake"
-load rakefile
-```
-
 Details about secrets [here](https://localize-docs.cirro.io/docs/authentication)
 
+## Support for Railties
+This gem includes `Railties` integration to automatically load Rake tasks when used within a Rails application. They will be available as soon as the gem is included in your Gemfile and bundled.
 
 ## Requirements
 * Ruby 3.0.0 or higher
-
-## Rake Tasks
-The `localize_ruby_client` gem provides several Rake tasks to help manage your localization processes. These tasks will be automatically available in your Rails project due to the integration with `Railties`.
-
-### Available Rake Tasks
-
-```bash
-rake localize_ruby_client:upload_file[project_uid, path_to_file, source_language_code, conflict_mode]
-```
-
-Uploads a file to the localization service.
-```bash
-rake localize_ruby_client:translate[project_uid]
-```
-Initiates a translation request for the specified project.
-
-```bash
-rake localize_ruby_client:update_translations[project_uid]
-```
-
-Updates translations for the specified project.
-
-```bash
-rake localize_ruby_client:upload_and_translate_file[project_uid, path_to_file, source_language_code, conflict_mode]
-```
-
-### Note  
-Some shells (like zsh) require you to escape the brackets: `rake my_task\['arg1'\]`
-
-A composite task that uploads a file, initiates a translation request, and updates translations.
+* Rails app with `config/locales` folder
 
 ## Usage
+The `localize_ruby_client gem` provides several `Rake` tasks to help manage your localization processes. These tasks will be automatically available in your `Rails` project due to the integration with `Railties`.
 
-For [Export all files endpoint](https://localize-docs.cirro.io/docs/continuous_projects/export_all) use next line:
+### Uploading Local YAML Files
+To upload each local YAML file in the `config/locales` folder to the Localize API, run:
 
+```bash
+rake localize_ruby_client:upload_files[conflict_mode]
 ```
-LocalizeRubyClient.new.update_translations(project_uid: 42)
+* conflict mode is optional, by default is `replace` if missed
+### Translating Uploaded Files
+To start the translation of the uploaded files via the Localize API, run:
+```bash
+rake localize_ruby_client:translate
 ```
 
-For [Import a file](https://localize-docs.cirro.io/docs/continuous_projects/import) you should add parameters:
+### Downloading Translated Files
+To download the translated files back into the `config/locales` folder, run:
+```bash
+rake localize_ruby_client:update_translations
+```
 
-```
-LocalizeRubyClient.new.upload_file(project_uid: 42, file: "your_file.yml", source_language_code: "en", conflict_mode: "replace")
-```
-*As example we added our values of parameters, you should add yours.
-
-For [Translate missing strings](https://localize-docs.cirro.io/docs/continuous_projects/translate_missing_strings):
-
-```
-LocalizeRubyClient.new.translate(project_uid: 42)
-```
+### Note
+Some shells (like zsh) require you to:
+ * escape the brackets: `rake my_task\['arg1'\]`
+ * wrap name in quotes: `rake 'my_task[arg1]'`
 
 ## Development
 

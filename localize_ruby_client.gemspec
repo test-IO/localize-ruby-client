@@ -30,18 +30,12 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  # use available version of activesupport from target project
   spec.add_runtime_dependency "activesupport"
-
-  spec.add_dependency "httparty", "~> 0.21.0"
-  spec.add_dependency "jwt", "~> 2.8", ">= 2.8.1"
-  spec.add_dependency "openssl", "~> 3.1"
-  spec.add_dependency "rake", "~> 13.0"
-  spec.add_dependency "rubyzip", "~> 2.3"
-
-  spec.add_development_dependency "pry"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop", "~> 1.21"
+  spec.add_runtime_dependency "httparty", "~> 0.21.0"
+  spec.add_runtime_dependency "jwt"
+  spec.add_runtime_dependency "multipart-post"
+  spec.add_runtime_dependency "rake", "~> 13.0"
+  spec.add_runtime_dependency "rubyzip", "~> 2.3"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "support/rails_mock"
 require "localize_ruby_client"
 require "active_support/core_ext"
 require "pry"

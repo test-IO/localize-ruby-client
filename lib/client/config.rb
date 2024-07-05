@@ -2,16 +2,17 @@
 
 module Client
   # The Config class holds configuration settings for the LocalizeRubyClient.
-  # It provides attributes for app_id, private_key, root_path_to_save, site, and api_version.
+  # It provides attributes for app_id, private_key, locales_dir_path, site, and api_version.
   # It also includes a method to validate these configurations to ensure they are properly set.
   class Config
-    attr_accessor :app_id, :private_key, :root_path_to_save, :site, :api_version
+    attr_accessor :app_id, :project_uid, :private_key, :locales_dir_path, :site, :api_version
 
     def initialize
       @app_id = nil
       @private_key = nil
-      @root_path_to_save = nil
-      @site = "https://localize.cirro.io/api"
+      @project_uid = nil
+      @locales_dir_path = Rails.root.join("config", "locales").to_s
+      @site = "http://localhost:6002/api"
       @api_version = "v2"
     end
 
@@ -19,7 +20,8 @@ module Client
       credentials = {
         app_id: @app_id,
         private_key: @private_key,
-        root_path_to_save: @root_path_to_save
+        project_uid: @project_uid,
+        locales_dir_path: @locales_dir_path
       }
 
       messages = credentials.map do |variable_name, value|

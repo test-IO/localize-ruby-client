@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require "rake"
-
-require_relative "../support/rails_mock"
 require "client/railtie"
 
 RSpec.describe Client::Railtie do
@@ -23,9 +21,8 @@ RSpec.describe Client::Railtie do
     # Ensure the rake_tasks block is executed
     Client::Railtie.load_tasks
     # Verify that the rake tasks file was loaded
-    expect(Rake.application.tasks.map(&:name)).to include("localize_ruby_client:upload_file")
+    expect(Rake.application.tasks.map(&:name)).to include("localize_ruby_client:upload_files")
     expect(Rake.application.tasks.map(&:name)).to include("localize_ruby_client:translate")
     expect(Rake.application.tasks.map(&:name)).to include("localize_ruby_client:update_translations")
-    expect(Rake.application.tasks.map(&:name)).to include("localize_ruby_client:upload_and_translate_file")
   end
 end

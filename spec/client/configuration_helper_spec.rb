@@ -15,12 +15,12 @@ RSpec.describe Client::ConfigurationHelper do # rubocop:disable Metrics/BlockLen
         dummy_class.configure do |config|
           config.app_id = "test_app_id"
           config.private_key = "test_private_key"
-          config.root_path_to_save = "/path/to/save"
+          config.project_uid = "123abc"
         end
 
         expect(dummy_class.config.app_id).to eq("test_app_id")
         expect(dummy_class.config.private_key).to eq("test_private_key")
-        expect(dummy_class.config.root_path_to_save).to eq("/path/to/save")
+        expect(dummy_class.config.project_uid).to eq("123abc")
       end
     end
 
@@ -30,11 +30,11 @@ RSpec.describe Client::ConfigurationHelper do # rubocop:disable Metrics/BlockLen
           dummy_class.configure do |config|
             config.app_id = nil
             config.private_key = nil
-            config.root_path_to_save = nil
+            config.project_uid = nil
           end
         end.to raise_error(NameError,
                            "Error: uninitialized configuration app_id, Error: uninitialized configuration private_key,"\
-                           " Error: uninitialized configuration root_path_to_save")
+                           " Error: uninitialized configuration project_uid")
       end
 
       it "raises a NameError when app_id is missing" do
@@ -42,7 +42,7 @@ RSpec.describe Client::ConfigurationHelper do # rubocop:disable Metrics/BlockLen
           dummy_class.configure do |config|
             config.app_id = nil
             config.private_key = "test_private_key"
-            config.root_path_to_save = "/path/to/save"
+            config.project_uid = "123abc"
           end
         end.to raise_error(NameError, "Error: uninitialized configuration app_id")
       end
@@ -52,19 +52,19 @@ RSpec.describe Client::ConfigurationHelper do # rubocop:disable Metrics/BlockLen
           dummy_class.configure do |config|
             config.app_id = "test_app_id"
             config.private_key = nil
-            config.root_path_to_save = "/path/to/save"
+            config.project_uid = "123abc"
           end
         end.to raise_error(NameError, "Error: uninitialized configuration private_key")
       end
 
-      it "raises a NameError when root_path_to_save is missing" do
+      it "raises a NameError when project_uid is missing" do
         expect do
           dummy_class.configure do |config|
             config.app_id = "test_app_id"
             config.private_key = "test_private_key"
-            config.root_path_to_save = nil
+            config.project_uid = nil
           end
-        end.to raise_error(NameError, "Error: uninitialized configuration root_path_to_save")
+        end.to raise_error(NameError, "Error: uninitialized configuration project_uid")
       end
     end
   end
