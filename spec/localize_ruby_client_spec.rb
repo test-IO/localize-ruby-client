@@ -67,8 +67,8 @@ RSpec.describe LocalizeRubyClient do # rubocop:disable Metrics/BlockLength
 
         subject.update_translations
 
-        expect(File.exist?("#{described_class.config.locales_dir_path}/en/simple_form.en.yml")).to be true
-        expect(File.exist?("#{described_class.config.locales_dir_path}/fr/simple_form.fr.yml")).to be true
+        expect(File.exist?("#{described_class.config.locales_dir_path}/simple_form.en.yml")).to be true
+        expect(File.exist?("#{described_class.config.locales_dir_path}/simple_form.fr.yml")).to be true
       end
     end
   end

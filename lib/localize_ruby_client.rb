@@ -92,11 +92,16 @@ class LocalizeRubyClient
 
   def extract_entries(temp_file)
     Zip::File.open(temp_file).each do |entry_file|
-      full_path_to_save = File.join(LocalizeRubyClient.config.locales_dir_path, entry_file.name)
-      directory_path = File.dirname(full_path_to_save)
-      FileUtils.mkdir_p(directory_path) unless File.directory?(directory_path)
+      # Use only the base name of the entry file to store it in the target directory
+      file_name = File.basename(entry_file.name)
+      full_path_to_save = File.join(LocalizeRubyClient.config.locales_dir_path, file_name)
 
-      # option { true } allows to replace file if it already exists
+      # Ensure the target directory exists
+      unless File.directory?(LocalizeRubyClient.config.locales_dir_path)
+        FileUtils.mkdir_p(LocalizeRubyClient.config.locales_dir_path)
+      end
+
+      # Extract the file to the target directory, replacing existing files if necessary
       entry_file.extract(full_path_to_save) { true }
     end
   end
