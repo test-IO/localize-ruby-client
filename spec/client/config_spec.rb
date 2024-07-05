@@ -11,7 +11,7 @@ RSpec.describe Client::Config do # rubocop:disable Metrics/BlockLength
       expect(config.private_key).to be_nil
       expect(config.project_uid).to be_nil
       expect(config.locales_dir_path).to eq(Rails.root.join("config", "locales").to_s)
-      expect(config.site).to eq("http://localhost:6002/api")
+      expect(config.site).to eq("https://localize.cirro.io/api")
       expect(config.api_version).to eq("v2")
     end
   end

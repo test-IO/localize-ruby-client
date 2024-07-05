@@ -12,7 +12,7 @@ module Client
       @private_key = nil
       @project_uid = nil
       @locales_dir_path = Rails.root.join("config", "locales").to_s
-      @site = "http://localhost:6002/api"
+      @site = "https://localize.cirro.io/api"
       @api_version = "v2"
     end
 
