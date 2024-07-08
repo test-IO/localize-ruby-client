@@ -1,79 +1,67 @@
-# Localize::Ruby::Client
+# LocalizeRubyClient
 
-Helps you to connect your application to [localize-docs.cirro.io](https://localize-docs.cirro.io/) easily.
+Helps you to connect your Rails application to [localize-docs.cirro.io](https://localize-docs.cirro.io/) easily by managing your localization files with three simple Rake tasks.
 
 ## Installation
 
-Install the gem and add to the application's Gemfile by executing:
+Install the gem and add it to the application's Gemfile by executing:
 
+```bash
+bundle add localize_ruby_client
 ```
-bundle add localize-ruby-client
+If Bundler is not being used to manage dependencies, install the gem by executing:
+```bash
+gem install localize_ruby_client
 ```
-If bundler is not being used to manage dependencies, install the gem by executing:
-```
-gem install localize-ruby-client
-```
-Add your credentials to .env
+Set your configurations:
 ```ruby
-APP_ID=your_application_id_here
-PRIVATE_KEY=your_private_key_here
-PROJECT_UID=your_project_id_here
-ROOT_PATH_TO_SAVE=path_you_want_to_save_translated
-# usually last one is ./config/locales/
+LocalizeRubyClient.configure do |config|
+  config.app_id = 'your_app_id'
+  config.private_key = 'your_private_key'
+  config.project_uid = 'your project_uid'
+end
 ```
-Add these lines to the Rakefile in your application
-
-```ruby
-# These lines are needed to load rake tasks of the Client gem.
-spec = Gem::Specification.find_by_name 'client'
-rakefile = "#{spec.gem_dir}/lib/tasks/client.rake"
-load rakefile
-```
-
 Details about secrets [here](https://localize-docs.cirro.io/docs/authentication)
 
+## Support for Railties
+This gem includes `Railties` integration to automatically load Rake tasks when used within a Rails application. They will be available as soon as the gem is included in your Gemfile and bundled.
 
 ## Requirements
 * Ruby 3.0.0 or higher
-
-## Usage in terminal
-For upload new file to Localize API, translate him, dounload and update locally use this command in your terminal:
-
-```
-rake client:upload_and_translate_file path_to_file source_language_code conflict_mode
-```
-
-For example:
-```
-rake client:upload_and_translate_file "./your/path_to/file.en.yml" "en" "replace"
-```
+* Rails app with `config/locales` folder
 
 ## Usage
+The `localize_ruby_client gem` provides several `Rake` tasks to help manage your localization processes. These tasks will be automatically available in your `Rails` project due to the integration with `Railties`.
 
-For [Export all files endpoint](https://localize-docs.cirro.io/docs/continuous_projects/export_all) use next line:
+### Uploading Local YAML Files
+To upload each local YAML file in the `config/locales` folder to the Localize API, run:
 
+```bash
+rake localize_ruby_client:upload_files[conflict_mode]
 ```
-Client.new.update_translations
+* conflict mode is optional, by default is `replace` if missed
+### Translating Uploaded Files
+To start the translation of the uploaded files via the Localize API, run:
+```bash
+rake localize_ruby_client:translate
 ```
 
-For [Import a file](https://localize-docs.cirro.io/docs/continuous_projects/import) you should add parameters:
+### Downloading Translated Files
+To download the translated files back into the `config/locales` folder, run:
+```bash
+rake localize_ruby_client:update_translations
+```
 
-```
-Client.new.upload_file(file: "your_file.yml", source_language_code: "en", conflict_mode: "replace")
-```
-*As example we added our values of parameters, you should add yours.
-
-For [Translate missing strings](https://localize-docs.cirro.io/docs/continuous_projects/translate_missing_strings):
-
-```
-Client.new.translate
-```
+### Note
+Some shells (like zsh) require you to:
+ * escape the brackets: `rake my_task\['arg1'\]`
+ * wrap name in quotes: `rake 'my_task[arg1]'`
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+<!-- To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org). -->
 
 ## Contributing
 

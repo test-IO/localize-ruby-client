@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require "client"
-require 'dotenv'
-Dotenv.load('./.env.test')
+require_relative "support/rails_mock"
+require "localize_ruby_client"
+require "active_support/core_ext"
+require "pry"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
