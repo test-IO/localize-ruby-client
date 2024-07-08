@@ -4,7 +4,7 @@
 
 - Initial release
 
-## [0.2.0] - ?
+## [0.2.0] - 2024-07-08
 
 ### Fixed
 - Resolved critical issues with gem installation.
